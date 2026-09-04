@@ -1,0 +1,3 @@
+[submodule "androidrecomp"]
+	path = androidrecomp
+	url = https://github.com/sp00nznet/androidrecomp.git

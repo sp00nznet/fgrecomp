@@ -1,0 +1,73 @@
+# Family Guy: The Quest for Stuff -- host contract.
+#
+# Griffin (TinyCo's engine) is a cocos2d-x 4.0 fork, so the contract is not
+# bespoke: these are cocos2d-x's own JNI entry points, and the Java side that
+# called them is public source. Read Cocos2dxRenderer.java, Cocos2dxActivity.java
+# and Cocos2dxHelper.java at the v4.0 tag to see exactly what each one is handed
+# and on which thread.
+#
+# Of libfg.so's 92 Java_* exports, these are what a desktop host must drive.
+# The other 53 are ad networks, Facebook, Google Play, Sentry, push and IAP --
+# stubbed, or answered by the server.
+#
+# Discover this list for another title with:  arc_host <library.so>
+
+# -- boot: the engine states its GL config, then takes the asset manager -------
+Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs
+Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext
+Java_org_cocos2dx_lib_Cocos2dxGLSurfaceView_shouldPreserveGLContext
+
+# -- surface lifecycle and the render tick ------------------------------------
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnSurfaceChanged
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeRender
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnPause
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnResume
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeOnRegainedGLContext
+
+# -- fork additions, not stock cocos2d-x --------------------------------------
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeIsLandscape
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeBPCResume
+
+# -- input --------------------------------------------------------------------
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesBegin
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesMove
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesEnd
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeTouchesCancel
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeKeyEvent
+Java_org_cocos2dx_lib_Cocos2dxAccelerometer_onSensorChanged
+
+# -- services the Android side PERFORMED, which the host must now perform ------
+# Text rasterization: cocos2d-x on Android draws labels with android.graphics
+# and hands the pixels back through nativeInitBitmapDC. There is no Skia here,
+# so the host owns this. SDL2_ttf covers it.
+Java_org_cocos2dx_lib_Cocos2dxBitmap_nativeInitBitmapDC
+Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetAudioDeviceInfo
+Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetEditTextDialogResult
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInsertText
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeDeleteBackward
+Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeGetContentText
+
+# -- Griffin platform layer: small, and mostly answerable with a constant ------
+Java_com_tinyco_griffin_PlatformUtils_onShutdown
+Java_com_tinyco_griffin_PlatformUtils_onLowMemory
+Java_com_tinyco_griffin_PlatformUtils_onLocaleChanged
+Java_com_tinyco_griffin_PlatformUtils_onLocaleReverted
+Java_com_tinyco_griffin_PlatformUtils_onKeyBoardVisibility
+Java_com_tinyco_griffin_PlatformUtils_skipOnResume
+Java_com_tinyco_griffin_PlatformUtils_isAmazonBuild
+Java_com_tinyco_griffin_PlatformUtils_isGoogleBuild
+Java_com_tinyco_griffin_PlatformUtils_doNativeActionWithParameter
+
+# -- audio: Griffin drives background music itself, outside cocos2d-x ----------
+Java_com_tinyco_griffin_PlatformUtils_playBackgroundMusic
+Java_com_tinyco_griffin_PlatformUtils_playBackgroundSound
+Java_com_tinyco_griffin_PlatformUtils_pauseBackgroundMusic
+Java_com_tinyco_griffin_PlatformUtils_resumeBackgroundMusic
+Java_com_tinyco_griffin_PlatformUtils_stopBackgroundMusic
+Java_com_tinyco_griffin_PlatformUtils_stopAmbient
+Java_com_tinyco_griffin_PlatformUtils_isBackgroundMusicPlaying
+
+# -- HTTP: both callbacks land on the self-hosted server -----------------------
+Java_com_tinyco_griffin_PlatformUtils_00024WebRequest_doCallback
+Java_com_tinyco_griffin_PlatformUtils_00024DownloaderRequest_doCallback
