@@ -7,7 +7,7 @@
 maps `libfg.so`, applies its 190,492 relocations and binds its imports --
 **350 of 386 resolve** with a live GL context, and all 41 host-contract entry
 points are present in the image. The lifter covers **100.00% of instructions and
-99.8% of functions**, and `arc_boot` runs **1,201 of the engine's 1,202 static
+99.8% of functions**, and `arc_boot` runs **all 1,202 of the engine's static
 constructors**. No JNI bridge yet. See [Milestones](#milestones).
 
 The first lift of this engine needed *no* changes to the toolkit and completed
@@ -181,6 +181,5 @@ fgrecomp/
       neither is Jam City's backend.
 - [x] **M7 — lifter.** ARM64 → C for hosts that are not ARM. **100.00% of
       instructions and 99.8% of functions**, 92,081 functions across 96
-      translation units. `arc_boot` runs 1,201 of the 1,202 static
-      constructors; the two that do not are a single unlifted indirect target
-      apiece, reached from data rather than from any call site.
+      translation units. `arc_boot` runs all 1,202 static constructors,
+      with no traps and no faults.
