@@ -3,10 +3,19 @@
 > *Family Guy: The Quest for Stuff* as a native cross-platform desktop
 > application. Bring your own APK.
 
-**Status: the library loads.** `fg_host` maps `libfg.so`, applies its 190,492
-relocations and binds its imports -- **350 of 386 resolve** with a live GL
-context, and all 41 host-contract entry points are present in the image. No
-JNI bridge yet. See [Milestones](#milestones).
+**Status: the engine is lifted and its static initialisation runs.** `fg_host`
+maps `libfg.so`, applies its 190,492 relocations and binds its imports --
+**350 of 386 resolve** with a live GL context, and all 41 host-contract entry
+points are present in the image. The lifter covers **99.99% of instructions and
+99.7% of functions**, and `arc_boot` runs **1,200 of the engine's 1,202 static
+constructors**. No JNI bridge yet. See [Milestones](#milestones).
+
+The first lift of this engine needed *no* changes to the toolkit and completed
+99.0% of functions, which is the strongest evidence so far that androidrecomp
+is a kit rather than one game's scaffolding. Everything since has been general
+work that flows back to the sibling ports, not Family Guy work -- and it did:
+[tstorecomp](https://github.com/sp00nznet/tstorecomp) gained 14 constructors
+from fixes found here.
 
 ---
 
@@ -168,4 +177,8 @@ fgrecomp/
       eight on a desktop backend, shared with tstorecomp.
 - [ ] **M6 — server.** The game talks to something. EA is not coming back and
       neither is Jam City's backend.
-- [ ] **M7 — lifter.** ARM64 → C for hosts that are not ARM.
+- [x] **M7 — lifter.** ARM64 → C for hosts that are not ARM. **99.99% of
+      instructions and 99.7% of functions**, 92,081 functions across 96
+      translation units. `arc_boot` runs 1,200 of the 1,202 static
+      constructors; the two that do not are a single unlifted indirect target
+      apiece, reached from data rather than from any call site.

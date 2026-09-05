@@ -61,3 +61,9 @@ venv/
 probe.txt
 run.txt
 triage.md
+
+# Lifted build output and boot logs -- derived from the game binary.
+build-lifted/
+*.log
+boot.out
+boot.err
