@@ -1,0 +1,32 @@
+image      libfg.so at 00000202F7160000
+imports    263 host functions, 0 satisfied by unlifted guest images, 123 unresolved
+
+mapped images
+  libfg.so               0x00000202f7160000 .. 0x00000202f9cbe000  lifted
+
+running 919 of 1202 static constructors
+  ctor 918 at 0x5b89a8: access violation on execute of 0x202f91f0bc0 -- inside libfg.so at +0x2090bc0
+  guest functions entered, most recent first:
+    libfg.so               +0x54aaf0
+    libfg.so               +0x547070
+    libfg.so               +0x547050
+    libfg.so               +0x2091b58
+    libfg.so               +0x5456c0
+    libfg.so               +0x208efb8
+    libfg.so               +0x5456c0
+    libfg.so               +0x208fb9c
+    libfg.so               +0x208ff68
+    libfg.so               +0x208b174
+    libfg.so               +0x54a830
+    libfg.so               +0x208b124
+    libfg.so               +0x54a820
+    libfg.so               +0x547b80
+    libfg.so               +0x5470c0
+    libfg.so               +0x208c06c
+  918 ran, 0 trapped, 1 faulted
+
+distinct fault addresses (1)
+       1 x 0x00000202f91f0bc0  inside libfg.so at +0x2090bc0
+
+first failures
+  ctor 918 at 0x5b89a8: access violation on execute of 0x202f91f0bc0 -- inside libfg.so at +0x2090bc0

@@ -7,14 +7,14 @@
 maps `libfg.so`, applies its 190,492 relocations and binds its imports --
 **350 of 386 resolve** with a live GL context, and all 41 host-contract entry
 points are present in the image. The lifter covers **99.99% of instructions and
-99.7% of functions**, and `arc_boot` runs **1,200 of the engine's 1,202 static
+99.7% of functions**, and `arc_boot` runs **1,201 of the engine's 1,202 static
 constructors**. No JNI bridge yet. See [Milestones](#milestones).
 
 The first lift of this engine needed *no* changes to the toolkit and completed
 99.0% of functions, which is the strongest evidence so far that androidrecomp
 is a kit rather than one game's scaffolding. Everything since has been general
 work that flows back to the sibling ports, not Family Guy work -- and it did:
-[tstorecomp](https://github.com/sp00nznet/tstorecomp) gained 14 constructors
+[tstorecomp](https://github.com/sp00nznet/tstorecomp) gained 27 constructors
 from fixes found here.
 
 ---
@@ -168,9 +168,11 @@ fgrecomp/
 - [x] **M3a — image loads.** 45.5 MB mapped, 190,492 relocations applied, 1,202
       constructors found, all 41 contract entry points resolved. 350/386 imports
       bound with a window; the 87 GL entry points cost no code.
-- [ ] **M3b — empty work list.** 36 imports outstanding: 9 `AAsset*`,
-      8 OpenSLES, 14 Linux-isms in libc, 3 libm, `eglGetProcAddress`,
-      `__android_log_assert`.
+- [ ] **M3b — empty work list.** 35 imports outstanding: 9 `AAsset*`,
+      8 OpenSLES, 14 Linux-isms in libc, 3 libm, `__android_log_assert`.
+      `eglGetProcAddress` is done — and it mattered more than one symbol,
+      because the guest branches *through* an unbound slot rather than simply
+      missing the function.
 - [ ] **M4 — JNI bridge.** The contract implemented against the cocos2d-x 4.0
       Java sources; window comes up on an arm64 host.
 - [ ] **M5 — text and audio.** `nativeInitBitmapDC` on SDL2_ttf; the OpenSLES
@@ -179,6 +181,6 @@ fgrecomp/
       neither is Jam City's backend.
 - [x] **M7 — lifter.** ARM64 → C for hosts that are not ARM. **99.99% of
       instructions and 99.7% of functions**, 92,081 functions across 96
-      translation units. `arc_boot` runs 1,200 of the 1,202 static
+      translation units. `arc_boot` runs 1,201 of the 1,202 static
       constructors; the two that do not are a single unlifted indirect target
       apiece, reached from data rather than from any call site.
