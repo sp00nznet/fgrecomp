@@ -1,0 +1,9 @@
+[6] BPC: [core/Signal/SignalCatcher]:106 Installing alternate stack
+[6] BPC: [core/Signal/Corkscrew]:87 libcorkscrew not loaded
+[4] BPC: [core/FileCacheManager]:62 bundle path: /
+
+[4] BPC: [core/FileCacheManager]:63 cache path: /
+
+[3] CCFileUtils-android.cpp: ... FileUtilsAndroid::assetmanager is nullptr
+[6] BPC: [common/DLog]:83 Assertion failure in jni/../../lib/griffin/android/jni/../../shared/common/PlatformIO.cpp at line 72
+[6] BPC: [common/DLog]:84     Unable to open directory 

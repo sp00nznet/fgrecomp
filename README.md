@@ -168,13 +168,19 @@ fgrecomp/
 - [x] **M3a — image loads.** 45.5 MB mapped, 190,492 relocations applied, 1,202
       constructors found, all 41 contract entry points resolved. 350/386 imports
       bound with a window; the 87 GL entry points cost no code.
-- [ ] **M3b — empty work list.** 35 imports outstanding: 9 `AAsset*`,
-      8 OpenSLES, 14 Linux-isms in libc, 3 libm, `__android_log_assert`.
-      `eglGetProcAddress` is done — and it mattered more than one symbol,
-      because the guest branches *through* an unbound slot rather than simply
-      missing the function.
-- [ ] **M4 — JNI bridge.** The contract implemented against the cocos2d-x 4.0
-      Java sources; window comes up on an arm64 host.
+- [ ] **M3b — empty work list.** 17 imports outstanding, and they are now
+      exactly two groups: the 9 `AAsset*` functions and the 8 OpenSLES
+      symbols. The libc tail is done. `eglGetProcAddress` mattered more than
+      one symbol, because the guest branches *through* an unbound slot rather
+      than simply missing the function.
+- [ ] **M4 — JNI bridge.** Under way and running real traffic.
+      `JNI_OnLoad` is called the way the Java runtime calls it, so the engine
+      has its `JavaVM`; `Cocos2dxActivity.getGLContextAttrs` runs to
+      completion and returns its `jintArray`; and `nativeInit` drives several
+      hundred JNI calls -- `FindClass`, `GetMethodID`, `NewObjectV`,
+      `AttachCurrentThread` -- before stopping on the asset manager. What it
+      stops on says so itself: *FileUtilsAndroid::assetmanager is nullptr*.
+      The `AAsset*` family is the next piece.
 - [ ] **M5 — text and audio.** `nativeInitBitmapDC` on SDL2_ttf; the OpenSLES
       eight on a desktop backend, shared with tstorecomp.
 - [ ] **M6 — server.** The game talks to something. EA is not coming back and
