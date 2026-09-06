@@ -168,19 +168,22 @@ fgrecomp/
 - [x] **M3a — image loads.** 45.5 MB mapped, 190,492 relocations applied, 1,202
       constructors found, all 41 contract entry points resolved. 350/386 imports
       bound with a window; the 87 GL entry points cost no code.
-- [ ] **M3b — empty work list.** 17 imports outstanding, and they are now
-      exactly two groups: the 9 `AAsset*` functions and the 8 OpenSLES
-      symbols. The libc tail is done. `eglGetProcAddress` mattered more than
-      one symbol, because the guest branches *through* an unbound slot rather
-      than simply missing the function.
-- [ ] **M4 — JNI bridge.** Under way and running real traffic.
-      `JNI_OnLoad` is called the way the Java runtime calls it, so the engine
-      has its `JavaVM`; `Cocos2dxActivity.getGLContextAttrs` runs to
-      completion and returns its `jintArray`; and `nativeInit` drives several
-      hundred JNI calls -- `FindClass`, `GetMethodID`, `NewObjectV`,
-      `AttachCurrentThread` -- before stopping on the asset manager. What it
-      stops on says so itself: *FileUtilsAndroid::assetmanager is nullptr*.
-      The `AAsset*` family is the next piece.
+- [x] **M3b — empty work list.** 8 imports outstanding, all OpenSLES, which
+      is the audio gap M5 covers. Everything else is answered. Two of them
+      mattered more than one symbol each: `eglGetProcAddress`, because the
+      guest branches *through* an unbound slot rather than merely missing the
+      function, and `setjmp`, because the host's captures the wrong machine's
+      state entirely.
+- [ ] **M4 — JNI bridge.** Running real traffic. `JNI_OnLoad` is called the
+      way the Java runtime calls it, so the engine has its `JavaVM`. Startup
+      is a sequence rather than one call -- `Cocos2dxHelper.nativeSetContext`,
+      then `Cocos2dxActivity.getGLContextAttrs`, then
+      `Cocos2dxRenderer.nativeInit` -- and the first two run to completion.
+      `nativeInit` drives around a thousand JNI calls, reads the game's own
+      files through the asset manager, uploads its first texture, and is now
+      inside asset decompression. The engine's log is clean: real bundle and
+      cache paths, no assertions.
+
 - [ ] **M5 — text and audio.** `nativeInitBitmapDC` on SDL2_ttf; the OpenSLES
       eight on a desktop backend, shared with tstorecomp.
 - [ ] **M6 — server.** The game talks to something. EA is not coming back and
