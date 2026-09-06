@@ -1,87 +1,86 @@
 window     1280x720, GL 2.1 compatibility
-jni        264 slots at 00007FF7B3EFD710, stubs 0x7ff7b3caa5d0..0x7ff7b3cb0650
-image      libfg.so at 0000016FE7E00000
-imports    369 host functions, 0 satisfied by unlifted guest images, 17 unresolved
-           still needed: AAssetDir_close AAssetDir_getNextFileName AAssetManager_fromJava AAssetManager_open AAssetManager_openDir AAsset_close
-                        AAsset_getLength AAsset_openFileDescriptor AAsset_read SL_IID_ANDROIDSIMPLEBUFFERQUEUE SL_IID_ENGINE SL_IID_METADATAEXTRACTION
-                        SL_IID_PLAY SL_IID_PREFETCHSTATUS SL_IID_SEEK SL_IID_VOLUME slCreateEngine
+assets     G:/recomp/fgrecomp/work/assets
+jni        264 slots at 00007FF6C5DC1170, stubs 0x7ff6c5b67850..0x7ff6c5b6e1e0
+image      libfg.so at 0000021ED3820000
+imports    378 host functions, 0 satisfied by unlifted guest images, 8 unresolved
+           still needed: SL_IID_ANDROIDSIMPLEBUFFERQUEUE SL_IID_ENGINE SL_IID_METADATAEXTRACTION SL_IID_PLAY SL_IID_PREFETCHSTATUS SL_IID_SEEK
+                        SL_IID_VOLUME slCreateEngine
 
 mapped images
-  libfg.so               0x0000016fe7e00000 .. 0x0000016fea95e000  lifted
+  libfg.so               0x0000021ed3820000 .. 0x0000021ed637e000  lifted
 
 running 1202 of 1202 static constructors
   1202 ran, 0 trapped, 0 faulted
 
 JNI_OnLoad returned JNI version 0x10004
 
+calling Java_org_cocos2dx_lib_Cocos2dxHelper_nativeSetContext at 0x1c6ac48
+  with 2 argument(s) after the environment and object
+  JNI:
+  8 JNI calls across these slots:
+         2 x  slot   6  FindClass
+         2 x  slot  21  NewGlobalRef
+         2 x  slot  33  GetMethodID
+         1 x  slot  35  CallObjectMethodV
+         1 x  slot 262  GetEnv
+  Java methods invoked:
+    getClassLoader
+  ...of which these had no value to return:
+    getClassLoader
+  returned, x0 = 0x7ff6c5dc14f0
+
 calling Java_org_cocos2dx_lib_Cocos2dxActivity_getGLContextAttrs at 0x1c69578
   JNI:
-  2 JNI calls across these slots:
+  10 JNI calls across these slots:
+         2 x  slot   6  FindClass
+         2 x  slot  21  NewGlobalRef
+         2 x  slot  33  GetMethodID
+         1 x  slot  35  CallObjectMethodV
          1 x  slot 179  NewIntArray
          1 x  slot 211  SetIntArrayRegion
-  returned, x0 = 0x10010000
+         1 x  slot 262  GetEnv
+  Java methods invoked:
+    getClassLoader
+  ...of which these had no value to return:
+    getClassLoader
+  returned, x0 = 0x10090000
 
 calling Java_org_cocos2dx_lib_Cocos2dxRenderer_nativeInit at 0x1c693f0
   with 2 argument(s) after the environment and object
-  last calls out of the guest, most recent first:
-    pthread_getspecific pthread_once memcpy memcpy memcpy memcpy memcpy memcpy strlen strlen dl_iterate_phdr pthread_mutex_unlock
   JNI:
-  460 JNI calls across these slots:
-         7 x  slot   6  FindClass
-         8 x  slot  19  PushLocalFrame
-         8 x  slot  20  PopLocalFrame
-         2 x  slot  21  NewGlobalRef
-        67 x  slot  23  DeleteLocalRef
-        18 x  slot  25  NewLocalRef
-         4 x  slot  29  NewObjectV
-        13 x  slot  31  GetObjectClass
-        17 x  slot  33  GetMethodID
-        15 x  slot  35  CallObjectMethodV
-        12 x  slot 113  GetStaticMethodID
-         7 x  slot 115  CallStaticObjectMethodV
-         1 x  slot 118  CallStaticBooleanMethodV
-         1 x  slot 130  CallStaticIntMethodV
-         3 x  slot 142  CallStaticVoidMethodV
+  1484 JNI calls across these slots:
+        43 x  slot   6  FindClass
+        34 x  slot  19  PushLocalFrame
+        34 x  slot  20  PopLocalFrame
+         5 x  slot  21  NewGlobalRef
+       205 x  slot  23  DeleteLocalRef
+        70 x  slot  25  NewLocalRef
+        37 x  slot  29  NewObjectV
+        19 x  slot  31  GetObjectClass
+        58 x  slot  33  GetMethodID
+        23 x  slot  35  CallObjectMethodV
+        39 x  slot 113  GetStaticMethodID
+        14 x  slot 115  CallStaticObjectMethodV
+         7 x  slot 118  CallStaticBooleanMethodV
+         2 x  slot 130  CallStaticIntMethodV
+        16 x  slot 142  CallStaticVoidMethodV
          1 x  slot 164  GetStringLength
          1 x  slot 165  GetStringChars
          1 x  slot 166  ReleaseStringChars
-         3 x  slot 167  NewStringUTF
-         9 x  slot 171  GetArrayLength
-         4 x  slot 176  NewByteArray
+         4 x  slot 167  NewStringUTF
+        15 x  slot 171  GetArrayLength
+        37 x  slot 176  NewByteArray
          1 x  slot 179  NewIntArray
-         4 x  slot 208  SetByteArrayRegion
+        37 x  slot 208  SetByteArrayRegion
          1 x  slot 211  SetIntArrayRegion
-         9 x  slot 222  GetPrimitiveArrayCritical
-         9 x  slot 223  ReleasePrimitiveArrayCritical
-        23 x  slot 228  ExceptionCheck
-       105 x  slot 260  AttachCurrentThread
-       106 x  slot 262  GetEnv
-  indirect branch to 0x1900000000000000, neither lifted nor a known import -- not in any mapped image
-  guest functions entered, most recent first:
-    libfg.so               +0x208b18c
-    libfg.so               +0x547b50
-    libfg.so               +0x54a850
-    libfg.so               +0x208ae3c  __cxa_get_globals+0
-    libfg.so               +0x54a810
-    libfg.so               +0x208a8c8  __cxa_begin_catch+0
-    libfg.so               +0x547d40
-    libfg.so               +0x208a8a0
-    libfg.so               +0x208ff64
-    libfg.so               +0x208e818
-    libfg.so               +0x5456d0
-    libfg.so               +0x5456d0
-    libfg.so               +0x5456d0
-    libfg.so               +0x5456d0
-    libfg.so               +0x5456d0
-    libfg.so               +0x5456d0
-  faulted at libfg.so +0x208b198
-  guest registers:
-     x0 =1900000000000000  x1 =0000016fe9e8af08  x2 =0000016fe9e8dd50  x3 =0000016fed963260
-     x4 =0000000000000060  x5 =4000000000000000  x6 =0000016fed962aa8  x7 =0000000000000000
-     x8 =0000016fed9645c1  x9 =0000000000000000  x10=00000000000018a4  x11=0000000000000002
-     x12=0000000000000000  x13=0000000000000001  x14=ffffffffffffffff  x15=6374237365727574
-     x16=0000016fea8e7ab0  x17=00007ff7b3cb4a80  x18=43b4000044200000  x19=0000016fed9645c1
-     x20=0000000000000000  x21=0000016fed9645c1  x22=0000016fea91eb60  x23=0000016fe562a470
-     x24=0000000000000000  x25=0000000000000000  x26=0000016fed9646f0  x27=0000016fe562a470
-     x28=0000016fea929770  x29=0000016fed9644c0  x30=0000016fe9e8b19c
-     sp =0000016fed9644b0
+         1 x  slot 215  RegisterNatives
+        15 x  slot 222  GetPrimitiveArrayCritical
+        15 x  slot 223  ReleasePrimitiveArrayCritical
+        55 x  slot 228  ExceptionCheck
+       346 x  slot 260  AttachCurrentThread
+       348 x  slot 262  GetEnv
+  Java methods invoked:
+    getClassLoader loadClass getDefault toString getBytes getLanguage getCountry getVariant getStringPreference getBundleDir getStorageDir getAssetsPath getDeviceInfo webRequestAsync
+  ...of which these had no value to return:
+    getClassLoader loadClass getDefault webRequestAsync
+  returned, x0 = 0

@@ -3,7 +3,13 @@
 > *Family Guy: The Quest for Stuff* as a native cross-platform desktop
 > application. Bring your own APK.
 
-**Status: the engine is lifted and its static initialisation runs.** `fg_host`
+**Status: the engine initialises and reaches its loading screen.** The three
+JNI entry points Android calls on startup all run to completion, and
+`nativeInit` returns cleanly after around 1,500 JNI calls -- reading the game's
+own files, uploading textures, and handing control to its
+`LoadingViewController`. Reproducible across runs.
+
+**Status of the lift itself:** `fg_host`
 maps `libfg.so`, applies its 190,492 relocations and binds its imports --
 **350 of 386 resolve** with a live GL context, and all 41 host-contract entry
 points are present in the image. The lifter covers **100.00% of instructions and
@@ -174,15 +180,14 @@ fgrecomp/
       guest branches *through* an unbound slot rather than merely missing the
       function, and `setjmp`, because the host's captures the wrong machine's
       state entirely.
-- [ ] **M4 — JNI bridge.** Running real traffic. `JNI_OnLoad` is called the
-      way the Java runtime calls it, so the engine has its `JavaVM`. Startup
-      is a sequence rather than one call -- `Cocos2dxHelper.nativeSetContext`,
-      then `Cocos2dxActivity.getGLContextAttrs`, then
-      `Cocos2dxRenderer.nativeInit` -- and the first two run to completion.
-      `nativeInit` drives around a thousand JNI calls, reads the game's own
-      files through the asset manager, uploads its first texture, and is now
-      inside asset decompression. The engine's log is clean: real bundle and
-      cache paths, no assertions.
+- [x] **M4 — JNI bridge.** `JNI_OnLoad` is called the way the Java runtime
+      calls it, so the engine has its `JavaVM`. Startup is a sequence rather
+      than one call -- `Cocos2dxHelper.nativeSetContext`, then
+      `Cocos2dxActivity.getGLContextAttrs`, then
+      `Cocos2dxRenderer.nativeInit` -- and all three return. The last drives
+      about 1,500 JNI calls, reads the game's own files through the asset
+      manager, uploads its textures, and ends in the engine's loading screen.
+      What remains is driving it frame by frame, which is M5 and M6 territory.
 
 - [ ] **M5 — text and audio.** `nativeInitBitmapDC` on SDL2_ttf; the OpenSLES
       eight on a desktop backend, shared with tstorecomp.
